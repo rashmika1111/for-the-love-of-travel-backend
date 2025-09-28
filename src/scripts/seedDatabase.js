@@ -162,8 +162,8 @@ const samplePosts = [
     `,
     excerpt: 'Discover the ultimate guide to backpacking through Southeast Asia, including budget tips, essential packing lists, and must-visit destinations.',
     featuredImage: {
-      url: '/images/southeast-asia-backpacking.jpg',
-      alt: 'Backpacker exploring Southeast Asia',
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Backpacker exploring Southeast Asia temples',
       caption: 'Exploring the vibrant culture and stunning landscapes of Southeast Asia'
     },
     tags: ['backpacking', 'southeast-asia', 'budget-travel', 'adventure'],
@@ -217,8 +217,8 @@ const samplePosts = [
     `,
     excerpt: 'Explore Italy\'s hidden coastal gems beyond the famous Amalfi Coast, from Cinque Terre to Puglia\'s pristine beaches.',
     featuredImage: {
-      url: '/images/italian-coast-hidden-gems.jpg',
-      alt: 'Hidden gems of the Italian coast',
+      url: 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Hidden gems of the Italian coast - Cinque Terre',
       caption: 'Discovering Italy\'s lesser-known coastal treasures'
     },
     tags: ['italy', 'coast', 'hidden-gems', 'europe', 'beaches'],
@@ -251,8 +251,8 @@ const samplePosts = [
     `,
     excerpt: 'Learn how to travel sustainably and responsibly, making choices that benefit both the environment and local communities.',
     featuredImage: {
-      url: '/images/sustainable-travel.jpg',
-      alt: 'Sustainable travel practices',
+      url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+      alt: 'Sustainable travel practices in nature',
       caption: 'Making responsible choices while exploring the world'
     },
     tags: ['sustainable-travel', 'eco-friendly', 'responsible-travel', 'environment'],
