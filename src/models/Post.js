@@ -357,7 +357,11 @@ postSchema.statics.getPopularPosts = async function(limit = 10, timeframe = '30d
   
   return await this.find({ 
     status: 'published',
-    publishedAt: timeFilter.publishedAt
+    publishedAt: timeFilter.publishedAt,
+    $or: [
+      { viewCount: { $gt: 100 } },
+      { likeCount: { $gt: 100 } }
+    ]
   })
     .populate('author', 'name email bio avatar')
     .populate('categories', 'name slug description')

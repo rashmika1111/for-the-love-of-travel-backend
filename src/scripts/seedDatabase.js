@@ -267,6 +267,166 @@ const samplePosts = [
     isPinned: true,
     allowComments: true,
     allowSharing: true
+  },
+  {
+    title: 'The Ultimate Tokyo Travel Guide: 7 Days of Pure Magic',
+    content: `
+      <h2>Welcome to Tokyo: A City Like No Other</h2>
+      <p>Tokyo is a mesmerizing blend of ancient traditions and cutting-edge technology, where neon lights meet serene temples. This 7-day guide will take you through the best of what this incredible city has to offer.</p>
+      
+      <h2>Day 1: Historic Asakusa and Modern Skytree</h2>
+      <p>Start your Tokyo adventure in Asakusa, home to the famous Senso-ji Temple. This ancient Buddhist temple, founded in 628 AD, is Tokyo's oldest temple and offers a glimpse into traditional Japan.</p>
+      
+      <h2>Day 2: The Bustling Streets of Shibuya and Harajuku</h2>
+      <p>Experience the famous Shibuya Crossing, the world's busiest pedestrian crossing, and explore the quirky fashion district of Harajuku. Don't miss Takeshita Street for unique shopping and people-watching.</p>
+      
+      <h2>Day 3: Imperial Palace and Ginza District</h2>
+      <p>Visit the Imperial Palace East Gardens and stroll through the elegant Ginza district, Tokyo's answer to Fifth Avenue. This area is perfect for high-end shopping and fine dining.</p>
+      
+      <h2>Day 4: Tsukiji Fish Market and Tokyo Bay</h2>
+      <p>Wake up early to experience the famous Tsukiji Outer Market, where you can sample the freshest sushi and seafood. Then explore the modern Odaiba area with its futuristic architecture.</p>
+      
+      <h2>Day 5: Traditional Ueno and Akihabara</h2>
+      <p>Spend the morning in Ueno Park, home to several world-class museums, then dive into the electric atmosphere of Akihabara, Tokyo's electronics and anime district.</p>
+      
+      <h2>Day 6: Day Trip to Nikko</h2>
+      <p>Take a day trip to Nikko, a UNESCO World Heritage site known for its beautiful shrines and natural hot springs. The Toshogu Shrine is a must-see with its intricate carvings and gold leaf decorations.</p>
+      
+      <h2>Day 7: Shinjuku and Final Explorations</h2>
+      <p>End your Tokyo journey in Shinjuku, exploring the bustling entertainment district and the peaceful Shinjuku Gyoen National Garden. Don't forget to try authentic ramen and visit a traditional izakaya.</p>
+      
+      <h2>Essential Tokyo Tips</h2>
+      <ul>
+        <li>Get a JR Pass for unlimited train travel</li>
+        <li>Learn basic Japanese phrases</li>
+        <li>Carry cash as many places don't accept cards</li>
+        <li>Respect local customs and traditions</li>
+        <li>Try the local convenience store food (it's amazing!)</li>
+      </ul>
+    `,
+    excerpt: 'Discover the magic of Tokyo with this comprehensive 7-day travel guide covering everything from ancient temples to modern districts, complete with insider tips and must-see attractions.',
+    featuredImage: {
+      url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2094&q=80',
+      alt: 'Tokyo cityscape with neon lights and traditional architecture',
+      caption: 'The mesmerizing blend of tradition and modernity in Tokyo'
+    },
+    tags: ['tokyo', 'japan', 'travel-guide', 'city-exploration', 'culture', 'destinations'],
+    status: 'published',
+    publishedAt: new Date('2025-09-20'),
+    seo: {
+      metaTitle: 'Tokyo Travel Guide: 7 Days of Pure Magic',
+      metaDescription: 'Complete 7-day Tokyo travel guide with itinerary, tips, and must-see attractions. Discover ancient temples, modern districts, and authentic experiences.',
+      keywords: ['tokyo travel guide', 'japan travel', 'tokyo itinerary', 'tokyo attractions', 'japan tourism']
+    },
+    contentSections: [
+      {
+        type: 'hero',
+        content: {
+          title: 'The Ultimate Tokyo Travel Guide',
+          subtitle: '7 Days of Pure Magic in Japan\'s Capital',
+          image: '/images/tokyo-hero.jpg'
+        },
+        order: 1
+      },
+      {
+        type: 'text',
+        content: 'Tokyo is a mesmerizing blend of ancient traditions and cutting-edge technology...',
+        order: 2
+      }
+    ],
+    breadcrumb: [
+      { title: 'Home', url: '/', position: 1 },
+      { title: 'Destinations', url: '/category/destinations', position: 2 },
+      { title: 'Asia', url: '/category/asia', position: 3 },
+      { title: 'Japan', url: '/category/japan', position: 4 }
+    ],
+    isFeatured: true,
+    isPinned: false,
+    allowComments: true,
+    allowSharing: true,
+    viewCount: 15420,
+    likeCount: 892,
+    commentCount: 156,
+    shareCount: 234
+  },
+  {
+    title: 'Hidden Beaches of the Maldives: Beyond the Resort Islands',
+    content: `
+      <h2>Discovering the Real Maldives</h2>
+      <p>While luxury resorts dominate the Maldivian tourism scene, there's a whole world of hidden beaches, local islands, and authentic experiences waiting to be discovered by adventurous travelers.</p>
+      
+      <h2>Local Island Paradise: Thulusdhoo</h2>
+      <p>Thulusdhoo offers the perfect blend of local culture and pristine beaches. This small island is famous for its surf breaks and traditional fishing culture. Stay in local guesthouses and experience authentic Maldivian life.</p>
+      
+      <h2>Maafushi: The Budget Traveler's Dream</h2>
+      <p>Maafushi has become the go-to destination for budget-conscious travelers. With beautiful beaches, excellent snorkeling, and affordable accommodations, it's perfect for those who want to experience the Maldives without breaking the bank.</p>
+      
+      <h2>Guraidhoo: A Hidden Gem</h2>
+      <p>This tiny island offers some of the most beautiful beaches in the Maldives with crystal-clear waters and pristine white sand. The island is small enough to explore on foot and offers an intimate, peaceful experience.</p>
+      
+      <h2>Dhigurah: The Whale Shark Capital</h2>
+      <p>Dhigurah is famous for its whale shark encounters. This long, narrow island offers excellent opportunities to swim with these gentle giants, especially between May and December.</p>
+      
+      <h2>Rasdhoo: Diving and Snorkeling Paradise</h2>
+      <p>Known for its incredible diving and snorkeling opportunities, Rasdhoo offers access to some of the best coral reefs in the Maldives. The island is also home to a beautiful sandbank that appears during low tide.</p>
+      
+      <h2>Budget Travel Tips for the Maldives</h2>
+      <ul>
+        <li>Stay on local islands instead of resorts</li>
+        <li>Book guesthouses in advance during peak season</li>
+        <li>Use public ferries for inter-island travel</li>
+        <li>Eat at local restaurants and cafes</li>
+        <li>Bring your own snorkeling gear</li>
+        <li>Respect local customs and dress modestly</li>
+      </ul>
+      
+      <h2>Best Time to Visit Local Islands</h2>
+      <p>The best time to visit local islands in the Maldives is during the dry season (November to April), when the weather is sunny and the seas are calm. However, visiting during the shoulder seasons can offer better deals and fewer crowds.</p>
+    `,
+    excerpt: 'Explore the hidden beaches and local islands of the Maldives beyond the luxury resorts. Discover authentic experiences, budget-friendly options, and pristine beaches that most tourists never see.',
+    featuredImage: {
+      url: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
+      alt: 'Hidden beach in the Maldives with crystal clear water',
+      caption: 'Discovering the pristine beauty of local Maldivian islands'
+    },
+    tags: ['maldives', 'hidden-gems', 'budget-travel', 'beaches', 'local-islands', 'snorkeling'],
+    status: 'published',
+    publishedAt: new Date('2025-09-25'),
+    seo: {
+      metaTitle: 'Hidden Beaches of the Maldives: Local Islands Guide',
+      metaDescription: 'Discover hidden beaches and local islands in the Maldives beyond luxury resorts. Budget travel tips, authentic experiences, and pristine beaches.',
+      keywords: ['maldives local islands', 'hidden beaches maldives', 'budget travel maldives', 'maldives local culture']
+    },
+    contentSections: [
+      {
+        type: 'hero',
+        content: {
+          title: 'Hidden Beaches of the Maldives',
+          subtitle: 'Beyond the Resort Islands',
+          image: '/images/maldives-hero.jpg'
+        },
+        order: 1
+      },
+      {
+        type: 'text',
+        content: 'While luxury resorts dominate the Maldivian tourism scene...',
+        order: 2
+      }
+    ],
+    breadcrumb: [
+      { title: 'Home', url: '/', position: 1 },
+      { title: 'Destinations', url: '/category/destinations', position: 2 },
+      { title: 'Beaches', url: '/category/beaches', position: 3 },
+      { title: 'Maldives', url: '/category/maldives', position: 4 }
+    ],
+    isFeatured: true,
+    isPinned: false,
+    allowComments: true,
+    allowSharing: true,
+    viewCount: 12850,
+    likeCount: 756,
+    commentCount: 89,
+    shareCount: 187
   }
 ];
 

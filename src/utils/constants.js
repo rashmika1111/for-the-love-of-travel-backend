@@ -231,7 +231,7 @@ const TIME_FORMATS = {
 // Environment Variables
 const ENV_VARS = {
   NODE_ENV: process.env.NODE_ENV || 'development',
-  PORT: process.env.PORT || 3000,
+  PORT: process.env.PORT || 5000,
   MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/love-of-travel',
   REDIS_URL: process.env.REDIS_URL || null,
   JWT_SECRET: process.env.JWT_SECRET || 'your-secret-key',
@@ -248,7 +248,7 @@ const CORS_CONFIG = {
   origin: [
     ENV_VARS.FRONTEND_URL,
     ENV_VARS.ADMIN_URL,
-    'http://localhost:3000',
+    'http://localhost:5000',
     'http://localhost:3001',
     'http://localhost:3002'
   ],

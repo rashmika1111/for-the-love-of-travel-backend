@@ -183,14 +183,14 @@ class PublicController {
   // Get popular posts
   async getPopularPosts(req, res) {
     try {
-      const { limit = 10 } = req.query;
+      const { limit = 10, timeframe = '30d' } = req.query;
       
       // Try to get from cache first
       let popularPosts = await cacheService.getPopularPosts(parseInt(limit));
       
       if (!popularPosts) {
         // If not in cache, fetch from database
-        popularPosts = await this.fetchPopularPostsFromDatabase(parseInt(limit));
+        popularPosts = await this.fetchPopularPostsFromDatabase(parseInt(limit), timeframe);
         
         if (popularPosts) {
           // Cache the result
@@ -198,11 +198,53 @@ class PublicController {
         }
       }
       
+      // Extract metadata for each post
+      const postsWithMetadata = popularPosts.map(post => ({
+        _id: post._id,
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        featuredImage: post.featuredImage,
+        author: post.author,
+        categories: post.categories,
+        tags: post.tags,
+        publishedAt: post.publishedAt,
+        metadata: {
+          readTime: post.readingTime || 0,
+          readTimeText: post.readingTime === 0 ? 'Less than 1 min read' : 
+                       post.readingTime === 1 ? '1 min read' : 
+                       `${post.readingTime} mins read`,
+          wordCount: post.wordCount || 0,
+          viewCount: post.viewCount || 0,
+          likeCount: post.likeCount || 0,
+          commentCount: post.commentCount || 0,
+          shareCount: post.shareCount || 0,
+          publishedDate: post.publishedAt ? post.publishedAt.toISOString() : null,
+          formattedPublishedDate: post.publishedAt ? post.publishedAt.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }) : null,
+          categoryNames: post.categories ? post.categories.map(cat => cat.name) : [],
+          categorySlugs: post.categories ? post.categories.map(cat => cat.slug) : [],
+          contentPreview: post.content ? post.content.substring(0, 200) + '...' : '',
+          contentLength: post.content ? post.content.length : 0,
+          isFeatured: post.isFeatured || false,
+          isPinned: post.isPinned || false,
+          allowComments: post.allowComments !== false,
+          allowSharing: post.allowSharing !== false,
+          popularityScore: (post.viewCount || 0) + (post.likeCount || 0) * 2 + (post.shareCount || 0) * 3,
+          isHighEngagement: (post.viewCount || 0) > 100 || (post.likeCount || 0) > 100
+        }
+      }));
+      
       res.json({
         success: true,
-        data: popularPosts || [],
+        data: postsWithMetadata,
         meta: {
           limit: parseInt(limit),
+          timeframe,
+          count: postsWithMetadata.length,
           cached: !!popularPosts,
           timestamp: new Date()
         }
@@ -434,6 +476,76 @@ class PublicController {
     }
   }
 
+  // Get latest posts with metadata
+  async getLatestPosts(req, res) {
+    try {
+      const { limit = 10 } = req.query;
+      
+      // Try to get from cache first
+      let latestPosts = await cacheService.getLatestPosts(parseInt(limit));
+      
+      if (!latestPosts) {
+        // If not in cache, fetch from database
+        latestPosts = await this.fetchLatestPostsFromDatabase(parseInt(limit));
+        
+        if (latestPosts) {
+          // Cache the result
+          await cacheService.setLatestPosts(latestPosts, parseInt(limit));
+        }
+      }
+      
+      // Extract metadata for each post
+      const postsWithMetadata = latestPosts.map(post => ({
+        _id: post._id,
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        featuredImage: post.featuredImage,
+        author: post.author,
+        categories: post.categories,
+        tags: post.tags,
+        publishedAt: post.publishedAt,
+        metadata: {
+          readTime: post.readingTime || 0,
+          readTimeText: post.readingTimeText || 'Less than 1 min read',
+          wordCount: post.wordCount || 0,
+          viewCount: post.viewCount || 0,
+          likeCount: post.likeCount || 0,
+          commentCount: post.commentCount || 0,
+          shareCount: post.shareCount || 0,
+          publishedDate: post.publishedAt ? post.publishedAt.toISOString() : null,
+          formattedPublishedDate: post.formattedPublishedDate || null,
+          categoryNames: post.categories ? post.categories.map(cat => cat.name) : [],
+          categorySlugs: post.categories ? post.categories.map(cat => cat.slug) : [],
+          contentPreview: post.content ? post.content.substring(0, 200) + '...' : '',
+          contentLength: post.content ? post.content.length : 0,
+          isFeatured: post.isFeatured || false,
+          isPinned: post.isPinned || false,
+          allowComments: post.allowComments !== false,
+          allowSharing: post.allowSharing !== false
+        }
+      }));
+      
+      res.json({
+        success: true,
+        data: postsWithMetadata,
+        meta: {
+          limit: parseInt(limit),
+          count: postsWithMetadata.length,
+          cached: !!latestPosts,
+          timestamp: new Date()
+        }
+      });
+    } catch (error) {
+      console.error('Get latest posts error:', error);
+      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: 'Failed to fetch latest posts',
+        code: ERROR_CODES.INTERNAL_ERROR
+      });
+    }
+  }
+
   // Get related posts
   async getRelatedPosts(req, res) {
     try {
@@ -543,9 +655,9 @@ class PublicController {
     }
   }
 
-  async fetchPopularPostsFromDatabase(limit) {
+  async fetchPopularPostsFromDatabase(limit, timeframe = '30d') {
     try {
-      return await Post.getPopularPosts(limit);
+      return await Post.getPopularPosts(limit, timeframe);
     } catch (error) {
       console.error('Error fetching popular posts from database:', error);
       return [];
@@ -614,6 +726,15 @@ class PublicController {
     } catch (error) {
       console.error('Error fetching tag from database:', error);
       return null;
+    }
+  }
+
+  async fetchLatestPostsFromDatabase(limit) {
+    try {
+      return await Post.getRecentPosts(limit);
+    } catch (error) {
+      console.error('Error fetching latest posts from database:', error);
+      return [];
     }
   }
 

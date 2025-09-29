@@ -16,7 +16,7 @@ class EmailService {
         return false;
       }
 
-      this.transporter = nodemailer.createTransporter({
+      this.transporter = nodemailer.createTransport({
         host: ENV_VARS.SMTP_HOST,
         port: parseInt(ENV_VARS.SMTP_PORT) || 587,
         secure: ENV_VARS.SMTP_PORT === '465', // true for 465, false for other ports

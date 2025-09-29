@@ -17,12 +17,13 @@ const initRedis = async () => {
       url: ENV_VARS.REDIS_URL,
       socket: {
         connectTimeout: 5000,
-        lazyConnect: true
+        lazyConnect: true,
+        reconnectStrategy: false // Disable automatic reconnection
       }
     });
 
     redisClient.on('error', (err) => {
-      console.error('Redis Client Error:', err);
+      console.warn('Redis Client Error:', err.message);
       redisClient = null; // Set to null on error
     });
 
@@ -45,9 +46,9 @@ const initRedis = async () => {
     
     return redisClient;
   } catch (error) {
-    console.error('Failed to connect to Redis:', error.message);
+    console.warn('Redis initialization failed, continuing without cache:', error.message);
     redisClient = null;
-    throw error; // Re-throw to be caught by server.js
+    return null; // Return null instead of throwing
   }
 };
 

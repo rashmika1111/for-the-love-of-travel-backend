@@ -136,13 +136,53 @@ router.get('/popular',
       
       const posts = await Post.getPopularPosts(parseInt(limit), timeframe);
       
+      // Extract metadata for each post
+      const postsWithMetadata = posts.map(post => ({
+        _id: post._id,
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        featuredImage: post.featuredImage,
+        author: post.author,
+        categories: post.categories,
+        tags: post.tags,
+        publishedAt: post.publishedAt,
+        metadata: {
+          readTime: post.readingTime || 0,
+          readTimeText: post.readingTime === 0 ? 'Less than 1 min read' : 
+                       post.readingTime === 1 ? '1 min read' : 
+                       `${post.readingTime} mins read`,
+          wordCount: post.wordCount || 0,
+          viewCount: post.viewCount || 0,
+          likeCount: post.likeCount || 0,
+          commentCount: post.commentCount || 0,
+          shareCount: post.shareCount || 0,
+          publishedDate: post.publishedAt ? post.publishedAt.toISOString() : null,
+          formattedPublishedDate: post.publishedAt ? post.publishedAt.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }) : null,
+          categoryNames: post.categories ? post.categories.map(cat => cat.name) : [],
+          categorySlugs: post.categories ? post.categories.map(cat => cat.slug) : [],
+          contentPreview: post.content ? post.content.substring(0, 200) + '...' : '',
+          contentLength: post.content ? post.content.length : 0,
+          isFeatured: post.isFeatured || false,
+          isPinned: post.isPinned || false,
+          allowComments: post.allowComments !== false,
+          allowSharing: post.allowSharing !== false,
+          popularityScore: (post.viewCount || 0) + (post.likeCount || 0) * 2 + (post.shareCount || 0) * 3,
+          isHighEngagement: (post.viewCount || 0) > 100 || (post.likeCount || 0) > 100
+        }
+      }));
+      
       res.json({
         success: true,
-        data: posts,
+        data: postsWithMetadata,
         meta: {
           limit: parseInt(limit),
           timeframe,
-          count: posts.length,
+          count: postsWithMetadata.length,
           timestamp: new Date()
         }
       });
@@ -232,6 +272,78 @@ router.get('/recent',
       res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
         success: false,
         message: 'Failed to fetch recent posts',
+        code: ERROR_CODES.INTERNAL_ERROR
+      });
+    }
+  }
+);
+
+// Get latest posts with metadata
+router.get('/latest',
+  async (req, res) => {
+    try {
+      const { limit = 10 } = req.query;
+      
+      // Fetch latest posts with populated data
+      const posts = await Post.find({ status: 'published' })
+        .populate('author', 'name email bio avatar slug')
+        .populate('categories', 'name slug description color')
+        .sort({ publishedAt: -1 })
+        .limit(parseInt(limit))
+        .lean();
+      
+      // Extract metadata for each post
+      const postsWithMetadata = posts.map(post => ({
+        _id: post._id,
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        featuredImage: post.featuredImage,
+        author: post.author,
+        categories: post.categories,
+        tags: post.tags,
+        publishedAt: post.publishedAt,
+        metadata: {
+          readTime: post.readingTime || 0,
+          readTimeText: post.readingTime === 0 ? 'Less than 1 min read' : 
+                       post.readingTime === 1 ? '1 min read' : 
+                       `${post.readingTime} mins read`,
+          wordCount: post.wordCount || 0,
+          viewCount: post.viewCount || 0,
+          likeCount: post.likeCount || 0,
+          commentCount: post.commentCount || 0,
+          shareCount: post.shareCount || 0,
+          publishedDate: post.publishedAt ? post.publishedAt.toISOString() : null,
+          formattedPublishedDate: post.publishedAt ? post.publishedAt.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }) : null,
+          categoryNames: post.categories ? post.categories.map(cat => cat.name) : [],
+          categorySlugs: post.categories ? post.categories.map(cat => cat.slug) : [],
+          contentPreview: post.content ? post.content.substring(0, 200) + '...' : '',
+          contentLength: post.content ? post.content.length : 0,
+          isFeatured: post.isFeatured || false,
+          isPinned: post.isPinned || false,
+          allowComments: post.allowComments !== false,
+          allowSharing: post.allowSharing !== false
+        }
+      }));
+      
+      res.json({
+        success: true,
+        data: postsWithMetadata,
+        meta: {
+          limit: parseInt(limit),
+          count: postsWithMetadata.length,
+          timestamp: new Date()
+        }
+      });
+    } catch (error) {
+      console.error('Get latest posts error:', error);
+      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: 'Failed to fetch latest posts',
         code: ERROR_CODES.INTERNAL_ERROR
       });
     }
